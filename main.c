@@ -24,6 +24,7 @@ int main(int argc, char * argv[])
     InterfaceInit();
     PileInit();
     DicoInit();
+
     InterpreteInit();
 
     // boucle générale
