@@ -9,7 +9,6 @@
 #include "dictionnaire.h"
 #include "noyau.h"
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 
 Retcode DicoInit()
@@ -23,6 +22,8 @@ Retcode DicoInit()
 	DicoAdd(PLUS, MOT_NOYAU, DICO_PLUS, DICO_NOYAU, 0, Code_Plus, &entree);
 	DicoAdd(DOT, MOT_NOYAU, DICO_DOT, DICO_NOYAU, 0, Code_Dot, &entree);
 	DicoAdd(SLASH, MOT_NOYAU, DICO_SLASH, DICO_NOYAU, 0, Code_Slash, &entree);
+
+	return OK;
 }
 
 Retcode DicoRecherche(char * mot, RefEntree *refptr)
@@ -42,7 +43,7 @@ Retcode DicoAdd(char * mot, TypeMot type, IdNoyau id, int flags, Donnee val, Cod
     else
     {
         if (strlen(mot) < DICO_NOM_MAX)
-                nouvelleEntree->mot = mot;
+            strcpy(nouvelleEntree->mot, mot);
 
         nouvelleEntree->type = type;
         nouvelleEntree->id = id;

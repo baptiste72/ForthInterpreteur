@@ -56,7 +56,7 @@ typedef Retcode (*CodeMot)();
 // définition de la structure d'une entrée de dictionnaire
 typedef struct
 {
-    char *mot;
+    char mot[DICO_NOM_MAX];
     TypeMot type;
     IdNoyau id;
     int flags;

@@ -12,13 +12,14 @@
 #define MAX_PILE_D 5    // Taille maximum de la pile
 
 Donnee *pile = NULL;    // Pile de données
-Index top = 0;          // Initialisation du sommet
+Index top;              // Initialisation du sommet
 
 Retcode PileInit()
 {
     pile = malloc(MAX_PILE_D * sizeof(Donnee)); // On alloue la mémoire
+    top = 0;                                    // On met le sommet à 0
 
-    if (pile == NULL)                           // Si la pile n'a pas été implémenté
+    if (pile == NULL)                           // Si la pile n'a pas été implémentée
         return ERR_NON_IMPL;
 
     else
@@ -45,7 +46,7 @@ Retcode PilePop(Donnee *val)
     else
     {
         *val = *(pile + --top);     // On décrémente le sommet et on récupère la valeur au sommet de la pile
-        *(pile + top--) = 0;        // On met à 0 la valeur au sommet de la pile et on décrémente le sommet
+        *(pile + top) = 0;          // On met à 0 la valeur au sommet de la pile
         return OK;
     }
 }
@@ -57,14 +58,14 @@ Retcode PileGet(Donnee *val)
 
     else
     {
-        *val = *(pile + --top);     // On décrémente le sommet et on récupère la valeur au sommet de la pile
+        *val = *(pile + (top - 1)); // On récupère la valeur au sommet de la pile
         return OK;
     }
 }
 
 Retcode PilePushN(Donnee val, Index index)
 {
-    if (top > MAX_PILE_D - 1)                                               // Si l'on sort de la pile
+    if (index >= top + 1)                                                   // Si l'on sort de la pile
         return ERR_PILE_OUT;
 
     else
@@ -83,7 +84,7 @@ Retcode PilePopN(Donnee *val, Index index)
     if (pile == NULL)                                                       // Si la pile est vide
         return ERR_PILE_VIDE;
 
-    else if (index >= top)                                                  // Si l'on sort de la pile
+    else if (index >= top + 1)                                              // Si l'on sort de la pile
         return ERR_PILE_OUT;
 
     else
@@ -92,7 +93,7 @@ Retcode PilePopN(Donnee *val, Index index)
         *(pile + index) = 0;                                                // On remet à 0 la valeur à l'index
         top--;                                                              // On décrémente le sommet
 
-        for (Index iteration = index; iteration < top; iteration++)
+        for (Index iteration = index; iteration < top + 1; iteration++)
             *(pile + iteration) = *(pile + (iteration + 1));                // On descend les valeurs de la pile
 
         return OK;
@@ -104,15 +105,15 @@ Retcode PileGetN(Donnee *val, Index index)
     if (pile == NULL)           // Si la pile est vide
         return ERR_PILE_VIDE;
 
-    else if (index >= top)      // Si l'on sort de la pile
+    else if (index >= top + 1)  // Si l'on sort de la pile
         return ERR_PILE_OUT;
 
     else
     {
-        *val = *(pile + index); // On récupère la valeur à l'index
+        *val = *(pile + index); // On récupère la valeur à l'index;
         return OK;
     }
-}
+ }
 
 Index PileMax()
 {
